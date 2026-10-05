@@ -4,7 +4,6 @@ import { join } from 'path';
 import { createOutputChannel, type UnifiedOutputChannel } from './output-channel.js';
 import { createStatusBar } from './status-bar.js';
 import { ServerManager } from './server-manager.js';
-import { LicenseManager } from './license-manager.js';
 import { StatusTreeView } from './tree-view.js';
 import { SetupPanel } from './setup-panel.js';
 import { TELEGRAM_BOT_TOKEN_SECRET_KEY } from './secrets.js';
@@ -60,25 +59,18 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
   const statusBarItem = createStatusBar(context);
 
-  const licenseManager = new LicenseManager(context, () => {
-    if (serverManager && serverManager.serverState === 'stopped') {
-      serverManager.start();
-    }
-  });
-
   await migrateTelegramBotToken(context, outputChannel);
 
   serverManager = new ServerManager(
     context,
     outputChannel,
     statusBarItem,
-    () => licenseManager.getKey()
   );
 
   serverManager.startDirWatcher();
 
   const extensionVersion = context.extension.packageJSON?.version ?? 'unknown';
-  const treeView = new StatusTreeView(serverManager, licenseManager, extensionVersion);
+  const treeView = new StatusTreeView(serverManager, extensionVersion);
   const serverLogPath = join(context.extensionPath, 'temp', 'server.log');
 
   context.subscriptions.push(
@@ -115,15 +107,6 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         // already appended a diagnostic header in that case.
       }
     }),
-    vscode.commands.registerCommand('cursorRemote.enterLicenseKey', async () => {
-      await licenseManager.promptForKey();
-      treeView.refresh();
-    }),
-    vscode.commands.registerCommand('cursorRemote.buyLicense', () => licenseManager.openBuyLink()),
-    vscode.commands.registerCommand('cursorRemote.clearLicenseKey', async () => {
-      await licenseManager.clearKey();
-      treeView.refresh();
-    }),
     vscode.commands.registerCommand('cursorRemote.openSetup', () => SetupPanel.createOrShow(context)),
   );
 
@@ -133,11 +116,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
   const config = vscode.workspace.getConfiguration('cursorRemote');
   if (config.get<boolean>('autoStart', true)) {
-    licenseManager.checkLicense().then(valid => {
-      if (valid) {
-        serverManager!.start();
-      }
-    });
+    serverManager.start();
   }
 }
 

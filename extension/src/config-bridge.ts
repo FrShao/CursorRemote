@@ -3,7 +3,6 @@ import { TELEGRAM_BOT_TOKEN_SECRET_KEY } from './secrets.js';
 
 export async function buildEnvFromConfig(
   context: vscode.ExtensionContext,
-  licenseKey: string | undefined
 ): Promise<Record<string, string>> {
   const config = vscode.workspace.getConfiguration('cursorRemote');
   const telegramBotToken = (await context.secrets.get(TELEGRAM_BOT_TOKEN_SECRET_KEY))
@@ -21,7 +20,6 @@ export async function buildEnvFromConfig(
     TELEGRAM_BOT_TOKEN: telegramBotToken,
     TELEGRAM_ALLOWED_USERS: config.get<string>('telegram.allowedUsers', ''),
     TELEGRAM_IMPL: config.get<string>('telegram.impl', 'grammy'),
-    LICENSE_KEY: licenseKey ?? '',
     DATA_DIR: context.globalStorageUri.fsPath,
     LOG_FORMAT: 'json',
   };

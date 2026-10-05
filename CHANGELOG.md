@@ -6,6 +6,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- CursorRemote no longer requires a license key. The extension auto-starts the relay, the sidebar shows server status immediately, and `npm run dev` / `npm start` no longer prompt for or check a key.
+
 ## [0.1.52] - 2026-07-12
 
 ### Fixed
