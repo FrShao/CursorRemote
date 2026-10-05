@@ -37,8 +37,8 @@ Ship a VS Code / Cursor extension that:
 ### US-1: Install and Go
 **As a** Cursor user, **I want to** install the extension from a `.vsix` file and have the server running, **so that** I don't need to clone a repo, install dependencies, or edit config files.
 
-### US-2: Auto-Start
-**As a** developer, **I want** the relay server to start automatically when Cursor launches, **so that** my phone client and Telegram bot are always available without manual intervention.
+### US-2: Optional Auto-Start
+**As a** developer, **I want** auto-start to be a setting that is off by default, **so that** the relay stays stopped until I start it or explicitly enable launch-time start.
 
 ### US-3: Settings UI
 **As a** developer, **I want to** configure CDP URL, server port, Telegram settings, and other options in VS Code Settings with inline documentation links, **so that** I don't need to edit `.env` files.
@@ -104,7 +104,7 @@ All settings are under the `cursorRemote` namespace. Each maps 1:1 to a server e
 
 | Setting | Type | Default | Env Var | Description |
 |---|---|---|---|---|
-| `cursorRemote.autoStart` | boolean | `true` | — | Auto-start server on launch |
+| `cursorRemote.autoStart` | boolean | `false` | — | Start the server when Cursor launches |
 | `cursorRemote.cdpUrl` | string | `http://127.0.0.1:9222` | `CDP_URL` | Cursor's CDP endpoint |
 | `cursorRemote.serverPort` | number | `3000` | `SERVER_PORT` | Web server port |
 | `cursorRemote.serverHost` | string | `127.0.0.1` | `SERVER_HOST` | Bind address (localhost-only by default) |

@@ -39,7 +39,7 @@ Open `http://localhost:9222/json` in a browser. You should see a JSON array. If 
 
 ## 2A. Extension Setup (Recommended)
 
-The CursorRemote extension provides the easiest setup experience with built-in status UI, auto-start, and a configuration wizard.
+The CursorRemote extension provides the easiest setup experience with built-in status UI, optional auto-start, and a configuration wizard.
 
 ### Install
 
@@ -53,7 +53,7 @@ Or in Cursor: Command Palette (`Ctrl+Shift+P`) > **Extensions: Install from VSIX
 
 ### Server Lifecycle
 
-The server auto-starts when Cursor launches (if `cursorRemote.autoStart` is `true`). The sidebar panel shows live status:
+The server stays stopped until you start it from the sidebar (**Start Server**) or the Command Palette (**CursorRemote: Start Server**). Set `cursorRemote.autoStart` to `true` if you want it to start when Cursor launches. The sidebar panel shows live status:
 
 - **Server: Running / Stopped** -- with Start and Stop buttons
 - **CDP: Connected** -- with the active workspace name

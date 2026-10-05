@@ -56,8 +56,8 @@
       "properties": {
         "cursorRemote.autoStart": {
           "type": "boolean",
-          "default": true,
-          "markdownDescription": "Automatically start the relay server when Cursor launches."
+          "default": false,
+          "markdownDescription": "Automatically start the relay server when Cursor launches. Off by default; start the server from the sidebar or Command Palette, or turn this on to start it with Cursor."
         },
         "cursorRemote.cdpUrl": {
           "type": "string",

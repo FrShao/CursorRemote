@@ -115,7 +115,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   });
 
   const config = vscode.workspace.getConfiguration('cursorRemote');
-  if (config.get<boolean>('autoStart', true)) {
+  if (config.get<boolean>('autoStart', false)) {
     serverManager.start();
   }
 }

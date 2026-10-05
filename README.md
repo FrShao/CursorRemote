@@ -47,7 +47,7 @@ Remote control for your local Cursor AI agent — monitor sessions, approve step
 | **Best for** | Daily use on your dev machine | Headless servers, CI, or manual configuration |
 | **Install** | One `.vsix` file | Clone repo + `npm install` |
 | **Configuration** | VS Code Settings + Setup Panel | `.env` file |
-| **Server lifecycle** | Auto-starts, sidebar Start/Stop | Manual `npm run dev` or `npm start` |
+| **Server lifecycle** | Sidebar Start/Stop; optional auto-start | Manual `npm run dev` or `npm start` |
 | **Status UI** | Sidebar panel with live status | Terminal logs + `/health` endpoint |
 | **Password** | Auto-generated on first install | Manual in `.env` |
 | **Multi-window** | Singleton — one server across all windows | Single process |
@@ -88,17 +88,15 @@ cursor --remote-debugging-port=9222
 
 **Important:** Fully quit and restart Cursor after adding the flag. On macOS use Cmd+Q (not just close the window). Verify: `http://localhost:9222/json` should return JSON.
 
-### 3. Server Auto-Starts
+### 3. Start the Server
 
-The extension automatically starts the relay server when Cursor launches. Check the **CursorRemote** sidebar panel for live status:
+The relay stays stopped until you start it. Open the **CursorRemote** sidebar and click **Start Server**, or run **CursorRemote: Start Server** from the Command Palette. To start it whenever Cursor launches, turn on `cursorRemote.autoStart` in Settings. The sidebar shows live status:
 
 - **Server status** -- Running / Stopped / Disconnected
 - **CDP connection** -- Connected / Disconnected with active workspace name
 - **Agent status** -- idle, running tool, etc. with current mode and model
 - **Connected clients** -- number of browser sessions
 - **Start / Stop buttons** -- control the server directly from the sidebar
-
-If it doesn't auto-start, click **Start Server** in the sidebar or run **CursorRemote: Start Server** from the Command Palette.
 
 ### 4. Configure Networking and Connect
 
@@ -129,7 +127,7 @@ All settings are under `cursorRemote.*` in VS Code Settings. Each setting includ
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `autoStart` | `true` | Auto-start server on launch |
+| `autoStart` | `false` | Start the server when Cursor launches |
 | `cdpUrl` | `http://127.0.0.1:9222` | Cursor's CDP endpoint |
 | `serverPort` | `3000` | Web server port |
 | `serverHost` | `127.0.0.1` | Bind address (localhost-only by default) |
